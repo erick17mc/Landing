@@ -17,3 +17,13 @@ body {
 .animate-marquee:hover {
     animation-play-state: paused;
 }
+
+/* Animación Float para Imagen Bono */
+@keyframes floatBono {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+}
+
+.animate-float-bono {
+    animation: floatBono 4s ease-in-out infinite;
+}
