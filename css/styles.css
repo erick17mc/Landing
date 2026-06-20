@@ -27,3 +27,38 @@ body {
 .animate-float-bono {
     animation: floatBono 4s ease-in-out infinite;
 }
+
+/* Estilos del carrusel de miniaturas */
+.carousel-track {
+    scroll-behavior: smooth;
+}
+
+.carousel-item {
+    scroll-snap-align: start;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Overlay flotante para miniatura ampliada */
+.carousel-overlay {
+    display: none;
+}
+
+.carousel-overlay.flex {
+    display: flex;
+}
+
+.carousel-overlay-video {
+    min-height: 320px;
+}
+
+.carousel-item.active {
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+}

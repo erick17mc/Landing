@@ -27,10 +27,100 @@
                 const response = await fetch(ruta);
                 if (response.ok) {
                     document.getElementById(id).innerHTML = await response.text();
+                    initThumbnailCarousel();
                 }
             } catch (error) {
                 console.error(`Error al cargar el componente ${ruta}:`, error);
             }
+        }
+
+        function initThumbnailCarousel() {
+            document.querySelectorAll('.carousel-container').forEach(container => {
+                if (container.dataset.carouselInit === 'true') return;
+                container.dataset.carouselInit = 'true';
+
+                const track = container.querySelector('.carousel-track');
+                const prev = container.querySelector('.carousel-prev');
+                const next = container.querySelector('.carousel-next');
+                const overlay = container.querySelector('.carousel-overlay');
+                const overlayVideo = container.querySelector('.carousel-overlay-video');
+                const overlayClose = container.querySelector('.carousel-overlay-close');
+                if (!track || !prev || !next || !overlay || !overlayVideo || !overlayClose) return;
+
+                const scrollAmount = track.clientWidth * 0.75;
+                let autoScrollTimer = null;
+
+                function startAutoScroll() {
+                    if (autoScrollTimer) return;
+                    autoScrollTimer = setInterval(() => {
+                        const maxScroll = track.scrollWidth - track.clientWidth;
+                        if (track.scrollLeft >= maxScroll - 10) {
+                            track.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                        }
+                    }, 3500);
+                }
+
+                function stopAutoScroll() {
+                    if (!autoScrollTimer) return;
+                    clearInterval(autoScrollTimer);
+                    autoScrollTimer = null;
+                }
+
+                prev.addEventListener('click', () => {
+                    stopAutoScroll();
+                    track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    startAutoScroll();
+                });
+
+                next.addEventListener('click', () => {
+                    stopAutoScroll();
+                    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    startAutoScroll();
+                });
+
+                track.addEventListener('mouseenter', stopAutoScroll);
+                track.addEventListener('mouseleave', startAutoScroll);
+                prev.addEventListener('mouseenter', stopAutoScroll);
+                next.addEventListener('mouseenter', stopAutoScroll);
+
+                function openOverlay(sourceUrl, item) {
+                    overlayVideo.src = sourceUrl;
+                    overlayVideo.load();
+                    overlayVideo.play().catch(() => {});
+                    overlay.classList.remove('hidden');
+                    overlay.classList.add('flex');
+                    container.querySelectorAll('.carousel-item').forEach(el => el.classList.remove('active'));
+                    if (item) item.classList.add('active');
+                }
+
+                function closeOverlay() {
+                    overlayVideo.pause();
+                    overlayVideo.currentTime = 0;
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('flex');
+                    container.querySelectorAll('.carousel-item').forEach(el => el.classList.remove('active'));
+                }
+
+                overlayClose.addEventListener('click', closeOverlay);
+                overlay.addEventListener('click', (event) => {
+                    if (event.target === overlay) {
+                        closeOverlay();
+                    }
+                });
+
+                container.querySelectorAll('.carousel-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const sourceUrl = item.dataset.videoSrc;
+                        if (!sourceUrl) return;
+                        stopAutoScroll();
+                        openOverlay(sourceUrl, item);
+                    });
+                });
+
+                startAutoScroll();
+            });
         }
 
         // Carga en paralelo de todos los bloques

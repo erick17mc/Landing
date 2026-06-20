@@ -11,23 +11,55 @@
 </div>
         
         <!-- GALERÍA DE MINIATURAS -->
-        <div class="grid grid-cols-4 gap-2">
-            <video playsinline muted autoplay loop class="object-cover w-full h-full aspect-square rounded-lg border-2 border-blue-500 shadow-sm cursor-pointer hover:opacity-80 transition">
-                <source src="video/v1.mp4" type="video/mp4">
-                Tu navegador no soporta video HTML5.
-            </video>
-            <video playsinline muted autoplay loop class="object-cover w-full h-full aspect-square rounded-lg shadow-sm cursor-pointer hover:opacity-80 transition hover:border hover:border-blue-300">
-                <source src="video/v2.mp4" type="video/mp4">
-                Tu navegador no soporta video HTML5.
-            </video>
-            <video playsinline muted autoplay loop class="object-cover w-full h-full aspect-square rounded-lg shadow-sm cursor-pointer hover:opacity-80 transition hover:border hover:border-blue-300">
-                <source src="video/miniatura-3.mp4" type="video/mp4">
-                Tu navegador no soporta video HTML5.
-            </video>
-            <video playsinline muted autoplay loop class="object-cover w-full h-full aspect-square rounded-lg shadow-sm cursor-pointer hover:opacity-80 transition hover:border hover:border-blue-300">
-                <source src="video/miniatura-4.mp4" type="video/mp4">
-                Tu navegador no soporta video HTML5.
-            </video>
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-semibold text-gray-700"></span>
+                <div class="flex items-center gap-2">
+                    <button type="button" class="carousel-prev inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm hover:bg-gray-100 transition" aria-label="Anterior miniatura">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button type="button" class="carousel-next inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm hover:bg-gray-100 transition" aria-label="Siguiente miniatura">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="carousel-container relative">
+                <div class="carousel-track flex gap-2 overflow-x-auto pb-2 snap-x snap-mandatory scroll-smooth no-scrollbar">
+                    <div class="carousel-item flex-shrink-0 w-40 rounded-lg overflow-hidden border border-blue-500 shadow-sm cursor-pointer" data-video-src="video/v1.mp4">
+                        <video playsinline muted autoplay loop class="object-cover w-full h-full aspect-square hover:opacity-80 transition">
+                            <source src="video/v1.mp4" type="video/mp4">
+                            Tu navegador no soporta video HTML5.
+                        </video>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-40 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer" data-video-src="video/v2.mp4">
+                        <video playsinline muted autoplay loop class="object-cover w-full h-full aspect-square hover:opacity-80 transition">
+                            <source src="video/v2.mp4" type="video/mp4">
+                            Tu navegador no soporta video HTML5.
+                        </video>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-40 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer" data-video-src="video/miniatura-3.mp4">
+                        <video playsinline muted autoplay loop class="object-cover w-full h-full aspect-square hover:opacity-80 transition">
+                            <source src="video/miniatura-3.mp4" type="video/mp4">
+                            Tu navegador no soporta video HTML5.
+                        </video>
+                    </div>
+                    <div class="carousel-item flex-shrink-0 w-40 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer" data-video-src="video/miniatura-4.mp4">
+                        <video playsinline muted autoplay loop class="object-cover w-full h-full aspect-square hover:opacity-80 transition">
+                            <source src="video/miniatura-4.mp4" type="video/mp4">
+                            Tu navegador no soporta video HTML5.
+                        </video>
+                    </div>
+                </div>
+
+                <div class="carousel-overlay hidden fixed inset-0 z-50 items-center justify-center bg-black/70 p-4">
+                    <div class="relative w-full max-w-4xl rounded-3xl overflow-hidden bg-white shadow-2xl">
+                        <button type="button" class="carousel-overlay-close absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 shadow hover:bg-gray-100" aria-label="Cerrar vista ampliada">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <video class="carousel-overlay-video w-full h-full bg-black" controls autoplay muted playsinline></video>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
