@@ -40,19 +40,183 @@
     <div id="footer-component"></div>
 
     <script>
+        let currentLanguage = localStorage.getItem('language') || 'en';
+
+        const htmlTranslations = {
+            es: {
+                "50% off ends today at 11:59 PM (only 4 left)": "50% de descuento termina hoy a las 11:59 PM (solo quedan 4)",
+                "⭐ Loved by 10,500+ customers": "⭐ Amado por más de 10,500 clientes",
+                "MundoSmartkids™: Over 100 Activities to Stimulate Attention, Concentration, and Learning": "MundoSmartkids™: Más de 100 actividades para estimular la atención, concentración y el aprendizaje",
+                "Helps your child <strong>stay focused and finish activities</strong> instead of giving up halfway.": "Ayuda a tu hijo a <strong>mantenerse concentrado y terminar actividades</strong> en lugar de rendirse a mitad de camino.",
+                "Reduces frustration and daily struggles, turning \"I can't\" moments into <strong>confidence and pride</strong>.": "Reduce la frustración y los conflictos diarios, convirtiendo los momentos de \"no puedo\" en <strong>confianza y orgullo</strong>.",
+                "Creates calmer playtime after school or before bed, <strong>without screens</strong> or arguments.": "Crea momentos de juego más tranquilos después de la escuela o antes de dormir, <strong>sin pantallas</strong> ni discusiones.",
+                "Ideal for kids who are easily distracted, restless, or seem <strong>\"in their own world\"</strong>.": "Ideal para niños que se distraen con facilidad, están inquietos o parecen <strong>\"en su propio mundo\"</strong>.",
+                "Builds real-life skills parents worry about: <strong>attention, patience, and self-control</strong>.": "Desarrolla habilidades reales que preocupan a los padres: <strong>atención, paciencia y autocontrol</strong>.",
+                "Feels like play to your child while you know they're <strong>learning and training their focus</strong>.": "Se siente como juego para tu hijo mientras tú sabes que está <strong>aprendiendo y entrenando su atención</strong>.",
+                "Only 10 minutes a day: a simple, realistic routine for parents who want <strong>to see real change</strong>.": "Solo 10 minutos al día: una rutina simple y realista para padres que quieren <strong>ver un cambio real</strong>.",
+                "Save 40%": "Ahorra 40%",
+                "Save $. 15": "Ahorra $. 15",
+                "Get MundoSmartkids": "Obtén MundoSmartkids",
+                "— THE OFFER ENDS TODAY —": "— LA OFERTA TERMINA HOY —",
+                "TO BE PAID": "PAGAR",
+                "100% Secure Payment": "Pago 100% seguro",
+                "With your purchase, you get <span class=\"text-red-500\">ALL these FREE</span> bonuses!": "Con tu compra obtienes <span class=\"text-red-500\">TODOS estos BONOS GRATIS</span>!",
+                "Special Offer - Limited Time": "Oferta especial - tiempo limitado",
+                "Instant Download": "Descarga instantánea",
+                "Print & Go": "Imprimir y listo",
+                "Lifetime Access": "Acceso de por vida",
+                "With your purchase, you get <span class=\"text-red-500\">ALL these FREE</span> bonuses!": "Con tu compra obtienes <span class=\"text-red-500\">TODOS estos bonos GRATIS</span>!",
+                "🧘‍♂️ Daily Mindfulness for Kids": "🧘‍♂️ Mindfulness diario para niños",
+                "🤬 Managing Anger for Kids": "🤬 Manejo de la ira para niños",
+                "📅 Kids Daily Planner": "📅 Planificador diario para niños",
+                "🙏 Prayer Journal for Kids": "🙏 Diario de oración para niños",
+                "🎄 Christmas Activities": "🎄 Actividades de Navidad",
+                "✂️ Cut & Paste Activity Book": "✂️ Libro de actividades de recortar y pegar",
+                "🧠 Imagine if your child could achieve this in <span class=\"underline decoration-blue-500 decoration-4\">Just 10 minutes a day...</span>": "🧠 Imagina si tu hijo pudiera lograr esto en <span class=\"underline decoration-blue-500 decoration-4\">solo 10 minutos al día...</span>",
+                "— Focus faster without screens, shouting, or frustration": "— Enfócate más rápido sin pantallas, gritos ni frustración",
+                "— Complete tasks without crying or saying \"I can't\"": "— Completa tareas sin llorar ni decir \"No puedo\"",
+                "— Manage emotions without emotional imbalances": "— Maneja las emociones sin desbalances emocionales",
+                "— Learn faster and remember more": "— Aprende más rápido y recuerda más",
+                "— Develop patience, calm, and self-control": "— Desarrolla paciencia, calma y autocontrol",
+                "— Play by stimulating their brain (100% screen-free)": "— Juega estimulando su cerebro (100% sin pantallas)",
+                "That's exactly what MundoSmartkids™ does for them.": "Eso es exactamente lo que MundoSmartkids™ hace por ellos.",
+                "Why does MundoSmartkids™ work so fast?": "¿Por qué funciona tan rápido MundoSmartkids™?",
+                "Designed according to Montessori principles": "Diseñado según principios Montessori",
+                "Stimulates the 5 key areas of the brain": "Estimula las 5 áreas clave del cerebro",
+                "Short but powerful exercises": "Ejercicios cortos pero poderosos",
+                "Simple progression and step-by-step approach": "Progresión simple y enfoque paso a paso",
+                "Perfect for active children or those who get distracted easily": "Perfecto para niños activos o que se distraen fácil",
+                "100% screen-free": "100% sin pantallas",
+                "Visible results in just a few days": "Resultados visibles en solo unos días",
+                "Each activity is designed to activate cognitive skills that school doesn't teach... but your child really needs.": "Cada actividad está diseñada para activar habilidades cognitivas que la escuela no enseña... pero que tu hijo realmente necesita.",
+                "⭐⭐⭐⭐⭐ Trusted by +10,000 families": "⭐⭐⭐⭐⭐ Confiado por más de 10,000 familias",
+                "Features": "Características",
+                "With MundoSmartkids™": "Con MundoSmartkids™",
+                "Without MundoSmartkids™": "Sin MundoSmartkids™",
+                "Greater concentration and calm": "Mayor concentración y calma",
+                "Finishes tasks more quickly": "Termina tareas más rápido",
+                "Greater memory and comprehension": "Mayor memoria y comprensión",
+                "Activities that really motivate them": "Actividades que realmente los motivan",
+                "More confidence and motivation": "Más confianza y motivación",
+                "What's Inside MundoSmartkids™": "Qué incluye MundoSmartkids™",
+                "A complete system designed to build focus, attention & cognitive skills.": "Un sistema completo diseñado para desarrollar enfoque, atención y habilidades cognitivas.",
+                "• 100+ Printable Activities": "• 100+ actividades imprimibles",
+                "• Fine Motor Skill Development": "• Desarrollo de habilidades motoras finas",
+                "• Focus & Attention Training": "• Entrenamiento de enfoque y atención",
+                "• Problem-Solving Exercises": "• Ejercicios de resolución de problemas",
+                "Endless learning — without screens.": "Aprendizaje sin fin — sin pantallas.",
+                "Everything Your Child Gets with MundoSmartkids™": "Todo lo que obtiene tu hijo con MundoSmartkids™",
+                "More than 100 included activities:": "Más de 100 actividades incluidas:",
+                "Focus and Attention Activities": "Actividades de enfoque y atención",
+                "Memory Improvement Activities": "Actividades para mejorar la memoria",
+                "Shapes and Patterns": "Formas y patrones",
+                "Logical Sequences": "Secuencias lógicas",
+                "Tracing and Fine Motor Skills": "Trazado y habilidades motoras finas",
+                "Colors and Matching": "Colores y emparejamientos",
+                "Hand-Eye Coordination": "Coordinación mano-ojo",
+                "+ ALL the extra gifts included FREE (just for today!)": "+ TODOS los regalos extra incluidos GRATIS (solo por hoy!)",
+                "Digital Program (instant access)": "Programa digital (acceso instantáneo)",
+                "Step-by-step Activities": "Actividades paso a paso",
+                "• No physical products are shipped": "• No se envían productos físicos",
+                "Special Offer - Limited Time": "Oferta especial - tiempo limitado",
+                "Get MundoSmartkids™ + 10 FREE bonuses before the price goes up again.": "Obtén MundoSmartkids™ + 10 bonos GRATIS antes de que el precio suba nuevamente.",
+                "✓ Instant Access": "✓ Acceso instantáneo",
+                "✓ Over 100 printable activities": "✓ Más de 100 actividades imprimibles",
+                "✓ 10 additional resources": "✓ 10 recursos adicionales",
+                "✓ Lifetime access": "✓ Acceso de por vida",
+                "Your child's brain is developing every second... every day counts.": "El cerebro de tu hijo se desarrolla cada segundo... cada día cuenta.",
+                "LIMITED TIME OFFER": "OFERTA POR TIEMPO LIMITADO",
+                "Loved by 3,000+ parents": "Amado por más de 3,000 padres",
+                "Instant download • Lifetime access • No screens": "Descarga instantánea • Acceso de por vida • Sin pantallas",
+                "WHY CHOOSE MundoSmartkids™": "POR QUÉ ELEGIR MundoSmartkids™",
+                "Visible Results in Weeks": "Resultados visibles en semanas",
+                "Improve focus and concentration": "Mejora la atención y concentración",
+                "Memory Improvement": "Mejora de la memoria",
+                "Activities that reinforce retention and understanding": "Actividades que refuerzan la retención y comprensión",
+                "Save Time and Money": "Ahorra tiempo y dinero",
+                "Printable activities you can use anywhere!": "Actividades imprimibles que puedes usar en cualquier lugar!",
+                "Simple and Effective": "Simple y efectivo",
+                "Just 10 minutes per day": "Solo 10 minutos por día",
+                "What other parents say:": "Lo que dicen otros padres:",
+                "Frequently Asked Questions": "Preguntas frecuentes",
+                "How do I receive the product?": "¿Cómo recibo el producto?",
+                "Immediately after your purchase, you'll receive <strong>instant access</strong> to download everything.": "Inmediatamente después de tu compra, recibirás <strong>acceso instantáneo</strong> para descargar todo.",
+                "No waiting, no shipping, you can start today.": "Sin esperas, sin envíos, puedes comenzar hoy.",
+                "For what age is this?": "¿Para qué edad es esto?",
+                "The system is designed and structurally adapted to accommodate children aged 4 to 12, with scalable instructional progression.": "El sistema está diseñado y estructuralmente adaptado para niños de 4 a 12 años, con progresión instruccional escalable.",
+                "Do I need teaching experience or special knowledge?": "¿Necesito experiencia docente o conocimiento especial?",
+                "No special training is required. The material includes simple instructions designed for direct use at home by parents.": "No se requiere formación especial. El material incluye instrucciones simples diseñadas para uso directo en casa por los padres.",
+                "What happens if my child is very active or easily distracted?": "¿Qué pasa si mi hijo es muy activo o se distrae fácilmente?",
+                "Precisely designed for those profiles, channeling excess energy through short-duration, highly stimulating games.": "Diseñado precisamente para esos perfiles, canalizando el exceso de energía con juegos de corta duración y muy estimulantes.",
+                "How long will it take to see results?": "¿Cuánto tiempo tomará ver resultados?",
+                "Many parents report visible changes in focus behavior and emotional regulation within the first few weeks of daily routine.": "Muchos padres reportan cambios visibles en la atención y la regulación emocional dentro de las primeras semanas de rutina diaria.",
+                "Do I need screens or internet?": "¿Necesito pantallas o internet?",
+                "You only need an internet connection once to download the PDF files. The program runs 100% without any digital screens.": "Solo necesitas una conexión a internet una vez para descargar los archivos PDF. El programa funciona 100% sin pantallas digitales.",
+                "How many times can I use the activities?": "¿Cuántas veces puedo usar las actividades?",
+                "With lifetime access to the downloadable digital file, you can print the activities unlimited times as you wish.": "Con acceso de por vida al archivo digital descargable, puedes imprimir las actividades las veces que quieras.",
+                "Will this help if my child has ADHD or learning difficulties?": "¿Esto ayudará si mi hijo tiene TDAH o dificultades de aprendizaje?",
+                "Yes, the playful activities based on neuro-educational principles and Montessori methodologies actively support the neurocognitive development of children with ADHD.": "Sí, las actividades lúdicas basadas en principios neuroeducativos y metodologías Montessori apoyan activamente el desarrollo neurocognitivo de los niños con TDAH.",
+                "Can I use it for more than one child?": "¿Puedo usarlo para más de un niño?",
+                "Absolutely. A single purchase gives you unlimited family use for all your children.": "Absolutamente. Una sola compra te da uso familiar ilimitado para todos tus hijos.",
+                "&copy; 2026 MundoSmartkids. All rights reserved.": "&copy; 2026 MundoSmartkids. Todos los derechos reservados."
+            }
+        };
+
+        function translateHtml(html, lang) {
+            if (lang !== 'es') return html;
+            const entries = Object.entries(htmlTranslations.es).sort((a, b) => b[0].length - a[0].length);
+            let translated = html;
+            for (const [source, target] of entries) {
+                translated = translated.replaceAll(source, target);
+            }
+            return translated;
+        }
+
+        function updateLanguageToggleButton() {
+            const button = document.getElementById('language-toggle');
+            if (!button) return;
+            button.textContent = currentLanguage === 'es' ? 'ES' : 'EN';
+            button.title = currentLanguage === 'es' ? 'Idioma Español' : 'Language English';
+        }
+
         async function cargarComponente(id, ruta) {
             try {
                 const response = await fetch(ruta);
                 if (response.ok) {
-                    document.getElementById(id).innerHTML = await response.text();
+                    let html = await response.text();
+                    html = translateHtml(html, currentLanguage);
+                    document.getElementById(id).innerHTML = html;
                     initThumbnailCarousel();
                     if (id === 'hero-pricing-component') {
                         initDynamicPricing();
+                    }
+                    if (id === 'header-component') {
+                        updateLanguageToggleButton();
+                        initLanguageToggle();
                     }
                 }
             } catch (error) {
                 console.error(`Error al cargar el componente ${ruta}:`, error);
             }
+        }
+
+        function loadAllComponents() {
+            cargarComponente('header-component', 'components/header.html');
+            cargarComponente('hero-pricing-component', 'components/hero-pricing.html');
+            cargarComponente('features-benefits-component', 'components/features-benefits.html');
+            cargarComponente('testimonials-component', 'components/testimonials.html');
+            cargarComponente('faq-component', 'components/faq.html');
+            cargarComponente('footer-component', 'components/footer.html');
+        }
+
+        function initLanguageToggle() {
+            const button = document.getElementById('language-toggle');
+            if (!button) return;
+            button.addEventListener('click', () => {
+                currentLanguage = currentLanguage === 'en' ? 'es' : 'en';
+                localStorage.setItem('language', currentLanguage);
+                loadAllComponents();
+            });
         }
 
         function initThumbnailCarousel() {
@@ -179,6 +343,25 @@
                 return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount);
             }
 
+            async function detectCountryCode() {
+                try {
+                    const response = await fetch('https://ipapi.co/json/');
+                    if (!response.ok) return null;
+                    const data = await response.json();
+                    return data.country_code || null;
+                } catch (error) {
+                    return null;
+                }
+            }
+
+            function getDefaultCountryCode() {
+                const languageCode = (navigator.language || '').slice(-2).toUpperCase();
+                if (pricing.countries[languageCode]) {
+                    return languageCode;
+                }
+                return 'US-OTHER';
+            }
+
             function updatePrices() {
                 const selected = selector.value;
                 const country = pricing.countries[selected] || pricing.countries['US-OTHER'];
@@ -194,8 +377,18 @@
                 saveAmountSecondary.textContent = `Save ${formattedSave}`;
             }
 
+            async function setInitialCountry() {
+                const detectedCode = await detectCountryCode();
+                if (detectedCode && pricing.countries[detectedCode]) {
+                    selector.value = detectedCode;
+                } else {
+                    selector.value = getDefaultCountryCode();
+                }
+                updatePrices();
+            }
+
             selector.addEventListener('change', updatePrices);
-            updatePrices();
+            setInitialCountry();
         }
 
         // Carga en paralelo de todos los bloques
