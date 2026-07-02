@@ -46,6 +46,9 @@
                 if (response.ok) {
                     document.getElementById(id).innerHTML = await response.text();
                     initThumbnailCarousel();
+                    if (id === 'hero-pricing-component') {
+                        initDynamicPricing();
+                    }
                 }
             } catch (error) {
                 console.error(`Error al cargar el componente ${ruta}:`, error);
@@ -141,6 +144,60 @@
             });
         }
 
+        function initDynamicPricing() {
+            const selector = document.getElementById('country-selector');
+            const priceAmount = document.getElementById('price-amount');
+            const comparePrice = document.getElementById('compare-price');
+            const priceAmountSecondary = document.getElementById('price-amount-secondary');
+            const comparePriceSecondary = document.getElementById('compare-price-secondary');
+            const saveAmountSecondary = document.getElementById('save-amount-secondary');
+            if (!selector || !priceAmount || !comparePrice || !priceAmountSecondary || !comparePriceSecondary || !saveAmountSecondary) return;
+
+            const pricing = {
+                basePriceUSD: 10,
+                comparePriceUSD: 25,
+                countries: {
+                    US: { locale: 'en-US', currency: 'USD', rate: 1 },
+                    CA: { locale: 'en-CA', currency: 'CAD', rate: 1.35 },
+                    MX: { locale: 'es-MX', currency: 'MXN', rate: 17.5 },
+                    BR: { locale: 'pt-BR', currency: 'BRL', rate: 5.3 },
+                    AR: { locale: 'es-AR', currency: 'ARS', rate: 980 },
+                    CO: { locale: 'es-CO', currency: 'COP', rate: 4400 },
+                    CL: { locale: 'es-CL', currency: 'CLP', rate: 840 },
+                    PE: { locale: 'es-PE', currency: 'PEN', rate: 3.7 },
+                    UY: { locale: 'es-UY', currency: 'UYU', rate: 40 },
+                    PY: { locale: 'es-PY', currency: 'PYG', rate: 7700 },
+                    BO: { locale: 'es-BO', currency: 'BOB', rate: 6.92 },
+                    CR: { locale: 'es-CR', currency: 'CRC', rate: 560 },
+                    GT: { locale: 'es-GT', currency: 'GTQ', rate: 7.85 },
+                    DO: { locale: 'es-DO', currency: 'DOP', rate: 56.5 },
+                    'US-OTHER': { locale: 'en-US', currency: 'USD', rate: 1 }
+                }
+            };
+
+            function formatValue(amount, locale, currency) {
+                return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount);
+            }
+
+            function updatePrices() {
+                const selected = selector.value;
+                const country = pricing.countries[selected] || pricing.countries['US-OTHER'];
+                const amount = pricing.basePriceUSD * country.rate;
+                const compare = pricing.comparePriceUSD * country.rate;
+                const formattedAmount = formatValue(amount, country.locale, country.currency);
+                const formattedCompare = formatValue(compare, country.locale, country.currency);
+                const formattedSave = formatValue(compare - amount, country.locale, country.currency);
+                priceAmount.textContent = formattedAmount;
+                comparePrice.textContent = formattedCompare;
+                priceAmountSecondary.textContent = formattedAmount;
+                comparePriceSecondary.textContent = formattedCompare;
+                saveAmountSecondary.textContent = `Save ${formattedSave}`;
+            }
+
+            selector.addEventListener('change', updatePrices);
+            updatePrices();
+        }
+
         // Carga en paralelo de todos los bloques
         document.addEventListener("DOMContentLoaded", () => {
             cargarComponente('header-component', 'components/header.html');
@@ -149,6 +206,11 @@
             cargarComponente('testimonials-component', 'components/testimonials.html');
             cargarComponente('faq-component', 'components/faq.html');
             cargarComponente('footer-component', 'components/footer.html');
+        });
+
+        // Cuando se vuelve a cargar un componente con HTML dinámico
+        document.addEventListener('DOMContentLoaded', () => {
+            initDynamicPricing();
         });
     </script>
 </body>
